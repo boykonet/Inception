@@ -1,15 +1,15 @@
 version: "3.7"
 
 services:
-  mysql:
-    build: $PWD/requirements/mariadb/
-    # command: /bin/bash -c "/srcs/mysql.sh"
-    ports:
-      - 3306:3306
-    working_dir: /
-    restart: always
-    volumes:
-      - $PWD/requirements/mariadb/tools/mysql_volume:/var/lib/mysql
+  # mysql:
+  #   build: $PWD/requirements/mariadb/
+  #   # command: /bin/bash -c "/srcs/mysql.sh"
+  #   ports:
+  #     - 3306:3306
+  #   working_dir: /
+  #   restart: always
+  #   volumes:
+  #     - $PWD/requirements/mariadb/tools/mysql_volume:/var/lib/mysql
   
   nginx:
     build: $PWD/requirements/nginx/
@@ -21,18 +21,18 @@ services:
     working_dir: /
     restart: always
 
-  wordpress:
-    build: $PWD/requirements/wordpress/
-    # command: /bin/bash -c "/files/wordpress.sh"
-    ports:
-      - 9000:9000
-      - 3306:3306
-    working_dir: /
-    restart: always
-    volumes:
-      - $PWD/requirements/wordpress/tools/wordpress_volume:/var/www/wordpress/wp-content
+  # wordpress:
+  #   build: $PWD/requirements/wordpress/
+  #   # command: /bin/bash -c "/files/wordpress.sh"
+  #   ports:
+  #     - 9000:9000
+  #     - 3306:3306
+  #   working_dir: /
+  #   restart: always
+  #   volumes:
+  #     - $PWD/requirements/wordpress/tools/wordpress_volume:/var/www/wordpress/wp-content
 
-volumes:
-  $PWD/requirements/mariadb/tools/mysql_volume
-  $PWD/requirements/wordpress/tools/wordpress_volume
+# volumes:
+  # $PWD/requirements/mariadb/tools/mysql_volume
+  # $PWD/requirements/wordpress/tools/wordpress_volume
 
