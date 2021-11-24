@@ -1,25 +1,51 @@
 version: "3.7"
 
 services:
-  # mysql:
-  #   build: $PWD/requirements/mariadb/
-  #   # command: /bin/bash -c "/srcs/mysql.sh"
-  #   ports:
-  #     - 3306:3306
-  #   working_dir: /
-  #   restart: always
-  #   volumes:
-  #     - $PWD/requirements/mariadb/tools/mysql_volume:/var/lib/mysql
+  mariadb:
+    build: ./requirements/mariadb/
+    restart: always
+    image: mariadb
+    container_name: mariadb
+    networks:
+      - net
+    volumes:
+      - ./requirements/mariadb/tools/mysql_volume:/var/lib/mysql
+    environments:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
   
   nginx:
-    build: $PWD/requirements/nginx/
-    # command: /bin/bash -c "/files/nginx.sh"
+    build: ./requirements/nginx/
+    restart: always
+    image: nginx
+    container_name: nginx
+    networks:
+      - net
     ports:
       - 80:80
       - 443:443
-      - 9000:9000
-    working_dir: /
+    depends_on:
+      - mariadb
+
+  wordpress:
+    build: ./requirements/wordpress/
     restart: always
+    image: wordpress
+    container_name: wordpress
+    networks:
+      - net
+    depends_on:
+      - mariadb
+    volumes:
+      - ./data:/var/www/wordpress
+    environments:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+
 
   # wordpress:
   #   build: $PWD/requirements/wordpress/

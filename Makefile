@@ -1,8 +1,10 @@
-build:
-	docker-compose -f ./srcs/docker-compose.yml -- build
+# build:
+# 	docker-compose -f ./srcs/docker-compose.yml --build
 	
+all: up
+
 up:
-	docker-compose up
+	docker-compose up --build
 
 down:
 	docker-compose --volume down
@@ -16,4 +18,4 @@ help:
 	@echo "make down    ->   docker-compose --volume down"
 	@echo ""
 
-.PHONY: build up down help
+.PHONY: up down help
