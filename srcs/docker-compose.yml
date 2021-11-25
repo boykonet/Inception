@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3.9"
 
 services:
   mariadb:
@@ -9,56 +9,51 @@ services:
     networks:
       - net
     volumes:
-      - ./requirements/mariadb/tools/mysql_volume:/var/lib/mysql
-    environments:
+      - ./requirements/tools/mariadb_volume:/var/lib/mysql
+    environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
   
-  nginx:
-    build: ./requirements/nginx/
-    restart: always
-    image: nginx
-    container_name: nginx
-    networks:
-      - net
-    ports:
-      - 80:80
-      - 443:443
-    depends_on:
-      - mariadb
-
-  wordpress:
-    build: ./requirements/wordpress/
-    restart: always
-    image: wordpress
-    container_name: wordpress
-    networks:
-      - net
-    depends_on:
-      - mariadb
-    volumes:
-      - ./data:/var/www/wordpress
-    environments:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-
+  # nginx:
+  #   build: ./requirements/nginx/
+  #   restart: always
+  #   image: nginx
+  #   container_name: nginx
+  #   networks:
+  #     - net
+  #   ports:
+  #     - ${HOST_PORT}:${CONTAINER_PORT}
+  #     - ${HOST_PORT_SSL}:${CONTAINER_PORT_SSL}
+  #   depends_on:
+  #     - mariadb
 
   # wordpress:
-  #   build: $PWD/requirements/wordpress/
-  #   # command: /bin/bash -c "/files/wordpress.sh"
-  #   ports:
-  #     - 9000:9000
-  #     - 3306:3306
-  #   working_dir: /
+  #   build: ./requirements/wordpress/
   #   restart: always
+  #   image: wordpress
+  #   container_name: wordpress
+  #   networks:
+  #     - net
+  #   depends_on:
+  #     - mariadb
   #   volumes:
-  #     - $PWD/requirements/wordpress/tools/wordpress_volume:/var/www/wordpress/wp-content
+  #     - ./requirements/tools/wordpress_database:/var/www/wordpress
+  #   environments:
+  #     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+  #     MYSQL_USER: ${MYSQL_USER}
+  #     MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  #     MYSQL_DATABASE: ${MYSQL_DATABASE}
+
+
 
 # volumes:
-  # $PWD/requirements/mariadb/tools/mysql_volume
-  # $PWD/requirements/wordpress/tools/wordpress_volume
+  # ./requirements/tools/mariadb_database
+  # ./requirements/tools/wordpress_database
+
+
+networks:
+  net:
+    name: netinet
 
