@@ -7,8 +7,8 @@ RUN mkdir -p /run/mysqld/
 RUN chmod -R 744 /run/mysqld/
 
 # copy mariadb.cnf
-COPY ./conf/mariadb.cnf /etc/my.cnf
-RUN chmod 744 /etc/my.cnf
+COPY ./conf/mariadb.cnf /etc/my.cnf.d/mariadb-server.cnf
+RUN chmod 744 /etc/my.cnf.d/mariadb-server.cnf
 
 # copy init.sql
 RUN mkdir -p /files
@@ -18,5 +18,7 @@ RUN chmod 744 /files/init.sql
 # copy run.sh
 COPY ./tools/run_mariadb.sh /files/run.sh
 RUN chmod 744 /files/run.sh
+
+VOLUME /var/lib/mysql
 
 CMD /bin/sh -c "/files/run.sh"
