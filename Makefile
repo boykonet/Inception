@@ -9,9 +9,9 @@ up:
 
 down:
 	docker-compose -f ./srcs/docker-compose.yml \
-		--project-directory ./srcs down
+		--project-directory ./srcs down --volumes
 
-destroy:
+destroy: down
 	rm -rf ./srcs/requirements/tools/mariadb_database
 	rm -rf ./srcs/requirements/tools/wordpress_database
 
