@@ -10,15 +10,14 @@ RUN chmod -R 744 /run/mysqld/
 COPY ./conf/mariadb.cnf /etc/my.cnf
 RUN chmod 744 /etc/my.cnf
 
-# copy init.sql
 RUN mkdir -p /files
+
+# copy init.sql
 COPY ./conf/init.sql /files/init.sql
 RUN chmod 744 /files/init.sql
 
 # copy run.sh
-COPY ./tools/run_mariadb.sh /files/run.sh
+COPY ./tools/mariadb.sh /files/run.sh
 RUN chmod 744 /files/run.sh
 
-# VOLUME /var/lib/mysql
-
-CMD /bin/sh -c "/files/run.sh"
+CMD ["/bin/sh", "-c", "/files/run.sh"]

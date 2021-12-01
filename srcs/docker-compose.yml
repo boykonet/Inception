@@ -44,6 +44,7 @@ services:
       - ${HOST_PORT_SSL}:${CONTAINER_PORT_SSL}
     environment:
       DOMAIN_NAME: ${DOMAIN_NAME}
+      CERTS_PATH: ${CERTS_PATH}
     depends_on:
       - mariadb
 
@@ -76,14 +77,13 @@ services:
 networks:
   net:
     name: netinet
-#    driver: custom-driver-1
 
 #  /home/login/data
 
 #volumes:
 #  mariadb_database:
 #    name: mariadb_db
-##    driver: local
+#    driver: local
 #    driver_opts:
 #      type: nfs
 #      o: bind
