@@ -42,6 +42,7 @@ services:
     ports:
       - ${HOST_PORT}:${CONTAINER_PORT}
       - ${HOST_PORT_SSL}:${CONTAINER_PORT_SSL}
+      - 9000:9000
     environment:
       DOMAIN_NAME: ${DOMAIN_NAME}
       CERTS_PATH: ${CERTS_PATH}
