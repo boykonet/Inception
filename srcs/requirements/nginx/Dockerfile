@@ -2,6 +2,7 @@ FROM alpine:3.12
 
 RUN apk update && apk upgrade
 RUN apk add nginx gettext
+RUN apk add php php-fpm
 
 RUN mkdir -p /etc/nginx/ssl/ && mkdir -p /run/nginx/
 

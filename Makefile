@@ -1,8 +1,8 @@
 all: up
 
 up:
-	mkdir -p ./srcs/requirements/tools/mariadb_database
-	mkdir -p ./srcs/requirements/tools/wordpress_database
+	mkdir -p /home/gkarina/data/mariadb_database
+	mkdir -p /home/gkarina/data/wordpress_database
 	docker-compose -f ./srcs/docker-compose.yml \
 		--project-directory ./srcs \
 		up --build -d
@@ -12,8 +12,8 @@ down:
 		--project-directory ./srcs down --volumes
 
 destroy: down
-	rm -rf ./srcs/requirements/tools/mariadb_database
-	rm -rf ./srcs/requirements/tools/wordpress_database
+	rm -rf /home/gkarina/data/mariadb_database
+	rm -rf /home/gkarina/data/wordpress_database
 
 help:
 	@echo ""
@@ -30,4 +30,4 @@ help:
 	@echo "                       -----------------------------------------------"
 	@echo ""
 
-.PHONY: up down help
+.PHONY: up down destroy help

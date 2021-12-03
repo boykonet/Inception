@@ -11,7 +11,7 @@ services:
     networks:
       - net
     volumes:
-      - ./requirements/tools/mariadb_database:/var/lib/mysql
+      - /home/gkarina/data/mariadb_database:/var/lib/mysql
     env_file:
       - .env
     expose:
@@ -38,7 +38,7 @@ services:
     networks:
       - net
     volumes:
-      - ./requirements/tools/wordpress_database:/var/www/wordpress
+      - /home/gkarina/data/wordpress_database:/var/www/wordpress
     ports:
       - ${HOST_PORT}:${CONTAINER_PORT}
       - ${HOST_PORT_SSL}:${CONTAINER_PORT_SSL}
@@ -59,7 +59,7 @@ services:
     networks:
       - net
     volumes:
-      - ./requirements/tools/wordpress_database:/var/www/wordpress
+      - /home/gkarina/data/wordpress_database:/var/www/wordpress
     expose:
       - ${WORDPRESS_PORT}
     environment:
