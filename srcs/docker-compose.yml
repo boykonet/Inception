@@ -3,7 +3,7 @@ version: "3.9"
 services:
   mariadb:
     build:
-      context: requirements/mariadb/
+      context: ./requirements/mariadb/
       dockerfile: Dockerfile
     restart: always
     image: mariadb
@@ -12,8 +12,6 @@ services:
       - net
     volumes:
       - /home/gkarina/data/mariadb_database:/var/lib/mysql
-    env_file:
-      - .env
     expose:
       - ${MYSQL_PORT}
     environment:
@@ -30,28 +28,28 @@ services:
 
   nginx:
     build:
-      context: requirements/nginx/
+      context: ./requirements/nginx/
       dockerfile: Dockerfile
     restart: always
     image: nginx
     container_name: nginx
     networks:
       - net
-    volumes:
-      - /home/gkarina/data/wordpress_database:/var/www/wordpress
+#    volumes:
+#      - /home/gkarina/data/wordpress_database:/var/www/wordpress
     ports:
-      - ${HOST_PORT}:${CONTAINER_PORT}
       - ${HOST_PORT_SSL}:${CONTAINER_PORT_SSL}
-      - 9000:9000
     environment:
       DOMAIN_NAME: ${DOMAIN_NAME}
       CERTS_PATH: ${CERTS_PATH}
+      WORDPRESS_CONTAINER_NAME: ${WORDPRESS_CONTAINER_NAME}
+      WORDPRESS_PORT: $WORDPRESS_PORT
     depends_on:
       - mariadb
 
   wordpress:
     build:
-      context: requirements/wordpress/
+      context: ./requirements/wordpress/
       dockerfile: Dockerfile
     restart: always
     image: wordpress
@@ -67,10 +65,10 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
-      DOMAIN_NAME: ${DOMAIN_NAME}
-      WORDPRESS_PORT: ${WORDPRESS_PORT}
       MYSQL_CONTAINER_NAME: ${MYSQL_CONTAINER_NAME}
       MYSQL_PORT: ${MYSQL_PORT}
+      WORDPRESS_PORT: ${WORDPRESS_PORT}
+      DOMAIN_NAME: ${DOMAIN_NAME}
     depends_on:
       - mariadb
       - nginx
@@ -78,8 +76,6 @@ services:
 networks:
   net:
     name: netinet
-
-#  /home/login/data
 
 #volumes:
 #  mariadb_database:

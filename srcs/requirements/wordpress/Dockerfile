@@ -11,9 +11,9 @@ RUN mkdir -p /var/www/wordpress
 RUN wget https://raw.github.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN chmod +x wp-cli.phar && mv wp-cli.phar /bin/wp
 
-# copy php7-fpm www.conf
-COPY ./conf/www.conf /etc/php7/php-fpm.d/www.conf
-RUN chmod 744 /etc/php7/php-fpm.d/www.conf
+## copy php7-fpm www.conf
+#COPY ./conf/www.conf /etc/php7/php-fpm.d/www.conf
+#RUN chmod 744 /etc/php7/php-fpm.d/www.conf
 
 RUN mkdir -p /files
 
