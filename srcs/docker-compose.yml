@@ -35,8 +35,6 @@ services:
     container_name: nginx
     networks:
       - net
-#    volumes:
-#      - /home/gkarina/data/wordpress_database:/var/www/wordpress
     ports:
       - ${HOST_PORT_SSL}:${CONTAINER_PORT_SSL}
     environment:
@@ -71,7 +69,6 @@ services:
       DOMAIN_NAME: ${DOMAIN_NAME}
     depends_on:
       - mariadb
-      - nginx
 
 networks:
   net:

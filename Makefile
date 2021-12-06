@@ -15,6 +15,8 @@ destroy: down
 	rm -rf /home/gkarina/data/mariadb_database
 	rm -rf /home/gkarina/data/wordpress_database
 
+fclean: down up
+
 help:
 	@echo ""
 	@echo "\033[32mINSEPTION\033[0m\n"
@@ -30,4 +32,4 @@ help:
 	@echo "                       -----------------------------------------------"
 	@echo ""
 
-.PHONY: up down destroy help
+.PHONY: up down destroy fclean help
