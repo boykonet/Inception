@@ -3,6 +3,7 @@ all: up
 up:
 	mkdir -p /home/gkarina/data/mariadb_database
 	mkdir -p /home/gkarina/data/wordpress_database
+	sudo chown -R gkarina:gkarina /home/gkarina/data
 	docker-compose -f ./srcs/docker-compose.yml \
 		--project-directory ./srcs \
 		up --build -d

@@ -9,9 +9,9 @@ services:
     image: mariadb
     container_name: mariadb
     networks:
-      - net
+      - netinet
     volumes:
-      - /home/gkarina/data/mariadb_database:/var/lib/mysql
+      - mariadb_database:/var/lib/mysql
     expose:
       - ${MYSQL_PORT}
     environment:
@@ -34,16 +34,18 @@ services:
     image: nginx
     container_name: nginx
     networks:
-      - net
+      - netinet
     ports:
       - ${HOST_PORT_SSL}:${CONTAINER_PORT_SSL}
+    volumes:
+      - wordpress_database:/var/www/wordpress
     environment:
       DOMAIN_NAME: ${DOMAIN_NAME}
       CERTS_PATH: ${CERTS_PATH}
       WORDPRESS_CONTAINER_NAME: ${WORDPRESS_CONTAINER_NAME}
       WORDPRESS_PORT: $WORDPRESS_PORT
     depends_on:
-      - mariadb
+      - wordpress
 
   wordpress:
     build:
@@ -53,9 +55,9 @@ services:
     image: wordpress
     container_name: wordpress
     networks:
-      - net
+      - netinet
     volumes:
-      - /home/gkarina/data/wordpress_database:/var/www/wordpress
+      - wordpress_database:/var/www/wordpress
     expose:
       - ${WORDPRESS_PORT}
     environment:
@@ -71,21 +73,21 @@ services:
       - mariadb
 
 networks:
-  net:
+  netinet:
     name: netinet
 
-#volumes:
-#  mariadb_database:
-#    name: mariadb_db
-#    driver: local
-#    driver_opts:
-#      type: nfs
-#      o: bind
-#      device: ./requirements/tools/mariadb_database
-#  wordpress_database:
-#    name: wordpress_volume
-#    driver: local
-#    driver_opts:
-#      o: bind
-#      type: none
-#      device: $PWD/requirements/tools/wordpress_database
+volumes:
+  mariadb_database:
+    name: mariadb_database
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/gkarina/data/mariadb_database
+  wordpress_database:
+    name: wordpress_database
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/gkarina/data/wordpress_database
